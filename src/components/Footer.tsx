@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaPhone, FaEnvelope } from 'react-icons/fa';
+import { FaFacebook, FaInstagram } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -6,31 +6,26 @@ const Footer = () => {
     <footer className="footer-landing">
       <div className="footer-content-landing">
         <a 
-          href="https://www.google.com/maps/place/Bella+Stone,+LLc/@43.4641412,-87.9532781,14.4z/data=!4m6!3m5!1s0x8804ecb6d0b3058f:0x75c35b6057b78256!8m2!3d43.4583816!4d-87.948204!16s%2Fg%2F1vbnpzy2?entry=ttu" 
+          href="https://www.google.com/maps/place/Port+Washington+Yacht+Club/@43.3918745,-87.8681159,17z/data=!3m1!4b1!4m6!3m5!1s0x8804ea1cbd453539:0x7d30452aaee626c4!8m2!3d43.3918706!4d-87.865541!16s%2Fg%2F1tfpq7zy" 
           target="_blank" 
           rel="noopener noreferrer"
           className="maps-button"
         >
-          <img src="/BellaMap.png" alt="Location" style={{ width: '250px', height: '250px', borderRadius: '7px' }} />
+          <img src="/pwycmap.png" alt="Port Washington Yacht Club Location" className="footer-map-image" />
         </a>
 
-        <div className="contact-grid-footer">
-          <a href="https://www.facebook.com/BellaStoneLLC/" target="_blank" rel="noopener noreferrer" className="social-button-top">
+        <div className="footer-copyright">
+          <p>© 2026 PWYC RENDEZVOUS REGATTA</p>
+        </div>
+
+        <div className="footer-social-links">
+          <a href="https://www.facebook.com/PWYCWI" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link">
             <FaFacebook size="2rem" />
           </a>
-          <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" className="social-button-top">
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-link">
             <FaInstagram size="2rem" />
           </a>
-          <a href="tel:+1-414-617-8078" className="social-button-top">
-            <FaPhone size="2rem" />
-          </a>
-          <a href="mailto:bellastone@live.com" className="social-button-top">
-            <FaEnvelope size="2rem" />
-          </a>
         </div>
-      </div>
-      <div className="footer-copyright">
-        <p>Copyright Bella Stone LLC 2026</p>
       </div>
     </footer>
   );

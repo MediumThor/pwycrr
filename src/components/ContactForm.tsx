@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '../config/firebase';
+import { db } from '../config/firebase';
 import './ContactForm.css';
 
 interface FormData {
@@ -23,8 +22,6 @@ const ContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [images, setImages] = useState<File[]>([]);
-  const [uploadingImages, setUploadingImages] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -33,34 +30,8 @@ const ContactForm = () => {
       [name]: value,
     }));
     
-    // Clear images when subject changes away from Quote Request
-    if (name === 'subject' && value !== 'Quote Request') {
-      setImages([]);
-    }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    
-    // Filter to only JPG/JPEG files
-    const imageFiles = files.filter(file => {
-      const extension = file.name.toLowerCase().split('.').pop();
-      return extension === 'jpg' || extension === 'jpeg';
-    });
-    
-    // Limit to 3 images
-    if (images.length + imageFiles.length > 3) {
-      alert('You can only upload up to 3 images');
-      const remainingSlots = 3 - images.length;
-      setImages([...images, ...imageFiles.slice(0, remainingSlots)]);
-    } else {
-      setImages([...images, ...imageFiles]);
-    }
-  };
-
-  const removeImage = (index: number) => {
-    setImages(images.filter((_, i) => i !== index));
-  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,32 +39,6 @@ const ContactForm = () => {
     setSubmitStatus('idle');
 
     try {
-      let imageUrls: string[] = [];
-
-      // Upload images if Quote Request is selected
-      if (formData.subject === 'Quote Request' && images.length > 0) {
-        setUploadingImages(true);
-        try {
-          const uploadPromises = images.map(async (image, index) => {
-            const timestamp = Date.now();
-            const fileName = `quote-requests/${timestamp}-${index}-${image.name}`;
-            const storageRef = ref(storage, fileName);
-            await uploadBytes(storageRef, image);
-            const url = await getDownloadURL(storageRef);
-            return url;
-          });
-          imageUrls = await Promise.all(uploadPromises);
-        } catch (uploadError) {
-          console.error('Error uploading images:', uploadError);
-          alert('Error uploading images. Please try again.');
-          setUploadingImages(false);
-          setIsSubmitting(false);
-          return;
-        } finally {
-          setUploadingImages(false);
-        }
-      }
-
       const messageData: any = {
         name: formData.name.trim(),
         email: formData.email.trim(),
@@ -104,21 +49,10 @@ const ContactForm = () => {
         createdAt: serverTimestamp(),
       };
 
-      // Only include imageUrls if there are images (Firestore doesn't allow undefined)
-      if (imageUrls.length > 0) {
-        messageData.imageUrls = imageUrls;
-      }
-
       await addDoc(collection(db, 'contactMessages'), messageData);
 
       setSubmitStatus('success');
       setFormData({ name: '', email: '', phone: '', subject: 'General Question', message: '' });
-      setImages([]);
-      // Reset file input
-      const fileInput = document.getElementById('images') as HTMLInputElement;
-      if (fileInput) {
-        fileInput.value = '';
-      }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
@@ -182,9 +116,9 @@ const ContactForm = () => {
             required
           >
             <option value="General Question">General Question</option>
-            <option value="Countertop Inquiry">Countertop Inquiry</option>
-            <option value="Design Consultation">Design Consultation</option>
-            <option value="Quote Request">Quote Request</option>
+            <option value="Registration Question">Registration Question</option>
+            <option value="Race Information">Race Information</option>
+            <option value="Sponsorship">Sponsorship</option>
             <option value="Other">Other</option>
           </select>
         </div>
@@ -202,41 +136,6 @@ const ContactForm = () => {
           />
         </div>
 
-        {formData.subject === 'Quote Request' && (
-          <div className="form-group">
-            <p className="image-upload-instruction">
-              Please upload up to 3 JPG/JPEG pictures of your dimensioned drawings.
-            </p>
-            <label htmlFor="images">Upload Images (up to 3 JPG/JPEG files)</label>
-            <input
-              type="file"
-              id="images"
-              accept=".jpg,.jpeg"
-              multiple
-              onChange={handleImageChange}
-              disabled={images.length >= 3}
-            />
-            {images.length > 0 && (
-              <div className="uploaded-images-preview">
-                <p className="images-count">{images.length} of 3 images selected</p>
-                <div className="images-list">
-                  {images.map((image, index) => (
-                    <div key={index} className="image-preview-item">
-                      <span className="image-name">{image.name}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeImage(index)}
-                        className="remove-image-btn"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
 
         {submitStatus === 'success' && (
           <div className="form-message success">
@@ -250,8 +149,8 @@ const ContactForm = () => {
           </div>
         )}
 
-        <button type="submit" className="submit-button" disabled={isSubmitting || uploadingImages}>
-          {uploadingImages ? 'Uploading images...' : isSubmitting ? 'Submitting...' : 'Submit'}
+        <button type="submit" className="submit-button" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </form>
     </div>

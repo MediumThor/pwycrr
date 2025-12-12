@@ -1,0 +1,460 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-container {
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal-container.nor-modal {
+  max-width: 800px;
+}
+
+.modal-container.waiver-modal {
+  max-width: 700px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.modal-close:hover {
+  background-color: #f0f0f0;
+  color: #333;
+  transform: rotate(90deg);
+}
+
+.modal-content {
+  padding: 3rem 2rem 2rem 2rem;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modal-description {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 2.5rem 0;
+}
+
+.modal-download-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  width: 100%;
+  justify-content: center;
+}
+
+.modal-download-button:hover {
+  background-color: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+.modal-download-button:active {
+  transform: translateY(0);
+}
+
+.modal-download-button svg {
+  font-size: 1.2rem;
+}
+
+/* NOR Content Styles */
+.nor-content {
+  text-align: left;
+}
+
+.nor-logo {
+  max-width: 150px;
+  height: auto;
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+.nor-header {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nor-subheader {
+  font-size: 1.1rem;
+  color: #333;
+  text-align: center;
+  margin: 0 0 0.25rem 0;
+}
+
+.nor-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 1.5rem 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nor-download-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  justify-content: center;
+}
+
+.nor-download-button:hover {
+  background-color: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+.nor-download-button:active {
+  transform: translateY(0);
+}
+
+.nor-download-button svg {
+  font-size: 1.1rem;
+}
+
+.nor-date {
+  font-size: 1.1rem;
+  color: #666;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  font-weight: 600;
+}
+
+.nor-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.nor-body p {
+  margin: 0 0 1rem 0;
+}
+
+.nor-body strong {
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.nor-reminder {
+  margin-top: 2rem !important;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-left: 4px solid #ff6b35;
+  border-radius: 4px;
+}
+
+/* Mobile Styles */
+@media (max-width: 640px) {
+  .modal-backdrop {
+    padding: 0.5rem;
+  }
+
+  .modal-container {
+    max-width: 100%;
+    border-radius: 12px;
+    max-height: 95vh;
+  }
+
+  .modal-content {
+    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .modal-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .modal-download-button {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+
+  .modal-close {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.25rem;
+  }
+
+  .modal-container.nor-modal {
+    max-width: 100%;
+  }
+
+  .nor-logo {
+    max-width: 120px;
+  }
+
+  .nor-header {
+    font-size: 1.5rem;
+  }
+
+  .nor-title {
+    font-size: 1.3rem;
+  }
+
+  .nor-body {
+    font-size: 0.9rem;
+  }
+
+  .modal-container.waiver-modal {
+    max-width: 100%;
+  }
+
+  .waiver-logo {
+    max-width: 120px;
+  }
+
+  .waiver-header {
+    font-size: 1.3rem;
+  }
+
+  .waiver-body {
+    font-size: 0.9rem;
+  }
+}
+
+/* Waiver Content Styles */
+.waiver-content {
+  text-align: left;
+}
+
+.waiver-logo {
+  max-width: 150px;
+  height: auto;
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+.waiver-header {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+.waiver-download-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  justify-content: center;
+}
+
+.waiver-download-button:hover {
+  background-color: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+.waiver-download-button:active {
+  transform: translateY(0);
+}
+
+.waiver-download-button svg {
+  font-size: 1.1rem;
+}
+
+.waiver-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.waiver-body p {
+  margin: 0 0 1rem 0;
+}
+
+.waiver-body strong {
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.waiver-form {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e0e0e0;
+}
+
+.waiver-form-field {
+  margin-bottom: 2rem;
+}
+
+.waiver-form-field label {
+  display: block;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.waiver-form-field input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #d4c5a9;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #fafafa;
+  color: #1a1a1a;
+  box-sizing: border-box;
+}
+
+.waiver-form-field input:focus {
+  outline: none;
+  border-color: #ff6b35;
+  background-color: #ffffff;
+}
+
+.waiver-submit-button {
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  margin-top: 1rem;
+}
+
+.waiver-submit-button:hover:not(:disabled) {
+  background-color: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+.waiver-submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.waiver-success-message {
+  background-color: #4ade80;
+  color: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+

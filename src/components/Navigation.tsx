@@ -6,12 +6,14 @@ const Navigation = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const year = '2026';
 
   const navItems = [
-    { path: '/', label: 'Home' },
-    { path: '/our-process', label: 'Our Process' },
-    { path: '/inventory', label: 'Inventory' },
-    { path: '/blog', label: 'Blog' },
+    { path: '/', label: 'HOME' },
+    { path: '/fleet', label: 'VIEW FLEET' },
+    { path: '/schedule', label: 'SCHEDULE' },
+    { path: '/sponsors', label: 'SPONSORS' },
+    { path: '/contact', label: 'CONTACT' },
   ];
 
   const toggleMenu = () => {
@@ -37,7 +39,8 @@ const Navigation = () => {
       <nav className={`navigation ${scrolled ? 'navigation-scrolled' : ''}`}>
         <div className="nav-container">
           <Link to="/" className="logo" onClick={closeMenu}>
-            <img src="/Logo.png" alt="Bella Stone Logo" className="logo-img" />
+            <img src="/Logo.png" alt="PWYC Rendezvous Regatta Logo" className="logo-img" />
+            <span className="logo-title">{year} Rendezvous Regatta</span>
           </Link>
           <button 
             className={`hamburger ${isMenuOpen ? 'active' : ''}`}
@@ -53,7 +56,7 @@ const Navigation = () => {
               <li key={item.path}>
                 <Link
                   to={item.path}
-                  className={location.pathname === item.path ? 'active' : ''}
+                  className={(location.pathname === item.path || (item.path === '/' && location.pathname === '/')) ? 'active' : ''}
                   onClick={closeMenu}
                 >
                   {item.label}

@@ -2,6 +2,7 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
+  padding-top: 120px;
   min-height: 100vh;
 }
 
@@ -16,7 +17,7 @@
 
 .dashboard-header h1 {
   margin: 0;
-  color: #1a1a1a;
+  color: #EADAB6;
 }
 
 .header-actions {

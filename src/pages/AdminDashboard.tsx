@@ -6,11 +6,11 @@ import { db } from '../config/firebase';
 import BlogManagement from '../components/admin/BlogManagement';
 import ImageLibrary from '../components/admin/ImageLibrary';
 import ContactInquiries from '../components/admin/ContactInquiries';
-import ProcessGallery from '../components/admin/ProcessGallery';
-import JobRequests from '../components/admin/JobRequests';
+import RegattaRegistrations from '../components/admin/RegattaRegistrations';
+import SponsorManagement from '../components/admin/SponsorManagement';
 import './AdminDashboard.css';
 
-type TabType = 'blogs' | 'images' | 'content' | 'inquiries' | 'process-gallery' | 'job-requests';
+type TabType = 'blogs' | 'images' | 'inquiries' | 'registrations' | 'sponsors';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<TabType>('inquiries');
@@ -22,6 +22,7 @@ const AdminDashboard = () => {
   const [attnInquiryCounts, setAttnInquiryCounts] = useState({
     contacts: 0,
   });
+  const [registrations, setRegistrations] = useState<number>(0);
 
   useEffect(() => {
     // Set up real-time listeners for new inquiry counts
@@ -57,10 +58,25 @@ const AdminDashboard = () => {
       }
     );
 
+    // Real-time listener for new registrations
+    const registrationsRef = collection(db, 'regattaRegistrations');
+    const registrationsNewQuery = query(registrationsRef, where('status', '==', 'new'));
+    
+    const unsubscribeRegistrations = onSnapshot(
+      registrationsNewQuery,
+      (snapshot) => {
+        setRegistrations(snapshot.size);
+      },
+      (error) => {
+        console.error('Error listening to registrations:', error);
+      }
+    );
+
     // Cleanup: unsubscribe from all listeners when component unmounts
     return () => {
       unsubscribeContactsNew();
       unsubscribeContactsAttn();
+      unsubscribeRegistrations();
     };
   }, []);
 
@@ -99,6 +115,21 @@ const AdminDashboard = () => {
           )}
         </button>
         <button
+          className={`tab-button ${activeTab === 'registrations' ? 'active' : ''}`}
+          onClick={() => setActiveTab('registrations')}
+        >
+          Registrations
+          {registrations > 0 && (
+            <span className="notification-badge">{registrations}</span>
+          )}
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'sponsors' ? 'active' : ''}`}
+          onClick={() => setActiveTab('sponsors')}
+        >
+          Sponsors
+        </button>
+        <button
           className={`tab-button ${activeTab === 'images' ? 'active' : ''}`}
           onClick={() => setActiveTab('images')}
         >
@@ -110,34 +141,14 @@ const AdminDashboard = () => {
         >
           Blog Posts
         </button>
-        <button
-          className={`tab-button ${activeTab === 'process-gallery' ? 'active' : ''}`}
-          onClick={() => setActiveTab('process-gallery')}
-        >
-          Process Gallery
-        </button>
-        <button
-          className={`tab-button ${activeTab === 'job-requests' ? 'active' : ''}`}
-          onClick={() => setActiveTab('job-requests')}
-        >
-          Job Requests
-        </button>
-        <button
-          className={`tab-button tab-button-disabled`}
-          disabled
-          title="Page Content editor is temporarily disabled"
-        >
-          Page Content
-        </button>
       </div>
 
       <div className="dashboard-content">
         {activeTab === 'blogs' && <BlogManagement />}
         {activeTab === 'images' && <ImageLibrary />}
-        {activeTab === 'process-gallery' && <ProcessGallery />}
-        {/* PageContentEditor kept for future use but not currently active */}
         {activeTab === 'inquiries' && <ContactInquiries />}
-        {activeTab === 'job-requests' && <JobRequests />}
+        {activeTab === 'registrations' && <RegattaRegistrations />}
+        {activeTab === 'sponsors' && <SponsorManagement />}
       </div>
     </div>
   );

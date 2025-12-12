@@ -1,302 +1,163 @@
-import { useEffect, useState, useRef } from 'react';
-import ImageSlideshow from '../components/ImageSlideshow';
-import ContactForm from '../components/ContactForm';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { db } from '../config/firebase';
-import { FaFacebook, FaInstagram, FaPhone, FaEnvelope } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaFacebook, FaInstagram } from 'react-icons/fa';
+import DownloadModal from '../components/DownloadModal';
+import SignupModal from '../components/SignupModal';
 import './Home.css';
 
-interface HomeSlide {
-  id: string;
-  url: string;
-  name: string;
-  createdAt: any;
-}
-
 const Home = () => {
-  const [homeSlides, setHomeSlides] = useState<string[]>([]);
-  const [loadingHomeSlides, setLoadingHomeSlides] = useState(true);
-  const [homepageImage, setHomepageImage] = useState<string | null>(null);
-  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const [heroImage] = useState<string>('/sailing.jpg');
+  const [openModal, setOpenModal] = useState<string | null>(null);
+  const year = '2026';
 
   useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          } else {
-            entry.target.classList.remove('visible');
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    return () => {
-      if (observerRef.current) {
-        sectionsRef.current.forEach((section) => {
-          if (section) observerRef.current?.unobserve(section);
-        });
-      }
-    };
+    // You can fetch hero image from Firebase here if needed
+    // For now, using default image
   }, []);
 
-  const addToRefs = (el: HTMLElement | null) => {
-    if (el && !sectionsRef.current.includes(el)) {
-      sectionsRef.current.push(el);
-      if (observerRef.current) {
-        observerRef.current.observe(el);
-      }
-    }
-  };
-
-  useEffect(() => {
-    // Parallax scroll effect
-    const handleScroll = () => {
-      const scrolled = window.pageYOffset;
-      const parallaxElements = document.querySelectorAll('.parallax');
-      parallaxElements.forEach((element) => {
-        const speed = element.getAttribute('data-speed') || '0.5';
-        const yPos = -(scrolled * parseFloat(speed));
-        (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const fetchHomeSlides = async () => {
-      try {
-        const slidesRef = collection(db, 'homeSlideshowImages');
-        const slidesQuery = query(slidesRef, orderBy('createdAt', 'desc'));
-        const snapshot = await getDocs(slidesQuery);
-        const fetched = snapshot.docs.map(doc => (doc.data() as HomeSlide).url).filter(Boolean);
-
-        if (fetched.length > 0) {
-          setHomeSlides(fetched);
-        } else {
-          // Fallback default images for home slideshow
-          setHomeSlides([
-            '/2.webp',
-            '/3.webp',
-            '/6.webp',
-            '/7.webp',
-            '/8.webp',
-            '/9.webp',
-            '/10.webp',
-            '/11.webp',
-            '/12.webp',
-            '/13.webp',
-          ]);
-        }
-      } catch (error) {
-        console.error('Error fetching home slideshow images:', error);
-        setHomeSlides([
-          '/2.webp',
-          '/3.webp',
-          '/6.webp',
-          '/7.webp',
-          '/8.webp',
-          '/9.webp',
-          '/10.webp',
-          '/11.webp',
-          '/12.webp',
-          '/13.webp',
-        ]);
-      } finally {
-        setLoadingHomeSlides(false);
-      }
-    };
-
-    const fetchHomepageImage = async () => {
-      try {
-        const homepageRef = collection(db, 'homepageImage');
-        const snapshot = await getDocs(homepageRef);
-        if (!snapshot.empty) {
-          const data = snapshot.docs[0].data();
-          if (data.url) {
-            setHomepageImage(data.url);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching homepage image:', error);
-      }
-    };
-
-    fetchHomeSlides();
-    fetchHomepageImage();
-  }, []);
+  const closeModal = () => setOpenModal(null);
 
   return (
     <div className="home-page">
-      {/* Parallax Hero Section */}
-      <section className="parallax-hero">
-          <div 
-          className="parallax-hero-image parallax"
-            data-speed="0.2"
-            style={{
-            backgroundImage: homepageImage 
-              ? `url(${homepageImage})` 
-              : homeSlides.length > 0 
-                ? `url(${homeSlides[0]})` 
-                : 'url(/9.webp)'
-            }}
-          >
-          <div className="parallax-hero-overlay">
-            <h1 className="parallax-hero-title">Bella Stone</h1>
-            <p className="parallax-hero-slogan">Where Elegance Meets Excellence</p>
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-image-container">
+          <img src={heroImage} alt="Sailboat" className="hero-image" />
+        </div>
+        <div className="hero-content-overlay">
+          <div className="hero-left">
+            <h1 className="hero-title">{year} PWYC RENDEZVOUS REGATTA</h1>
+            <button 
+              className="sign-up-button"
+              onClick={() => setOpenModal('signup')}
+            >
+              SIGN UP
+            </button>
+            <div className="hero-buttons">
+              <button 
+                className="hero-button-secondary"
+                onClick={() => setOpenModal('nor')}
+              >
+                NOR
+              </button>
+              <button 
+                className="hero-button-secondary"
+                onClick={() => setOpenModal('waiver')}
+              >
+                Liability Waiver
+              </button>
+              <button 
+                className="hero-button-secondary"
+                onClick={() => setOpenModal('entry')}
+              >
+                Entry Form
+              </button>
+            </div>
           </div>
-                </div>
+        </div>
       </section>
 
-      {/* Quality Saying Section */}
-      <section className="quality-saying-section" ref={addToRefs}>
-        <div className="quality-saying-content">
-          <p className="quality-saying-text">
-            Quality countertops crafted with the most modern methods, combining timeless elegance 
-            with cutting-edge precision. At Bella Stone, we transform your vision into reality 
-            through innovative fabrication techniques and meticulous attention to detail. Since 2008.
-                </p>
+      {/* Content Section */}
+      <section className="content-section">
+        <div className="content-wrapper">
+          <h2 className="content-title">18th Annual PWYC Rendezvous Regatta</h2>
+          <img src="/Logo.png" alt="PWYC Logo" className="content-logo" />
+          <div className="content-text-box">
+            <p className="content-text">
+              The Port Washington Yacht Club proudly invites sailors to the 18th Annual Rendezvous Regatta, a long-standing tradition that brings together competitive racing, good seamanship, and the camaraderie that defines our sailing community.
+            </p>
+            <p className="content-text">
+              This yearly regatta features two races, with the potential for a third race depending on conditions and time. Courses are designed as windward–leeward races, providing fair, engaging competition for a wide range of boats and skill levels while emphasizing tactical sailing, clean starts, and strong boat-handling.
+            </p>
+            <p className="content-text">
+              All sailboats wishing to race are welcome. Whether you are a seasoned racer or looking to test your boat and crew in a friendly but well-run event, the Rendezvous Regatta offers a professional race environment with an approachable, fun atmosphere.
+            </p>
+            <p className="content-text">
+              Join us on the water for a full day of sailing, followed by shoreside fellowship at PWYC as we celebrate another year of racing on Lake Michigan.
+            </p>
+            <p className="content-text">
+              Fair winds, good racing, and we look forward to seeing you on the starting line.
+            </p>
+          </div>
           
-          {/* Contact Us Button */}
-          <div className="contact-us-button-container">
-                  <button
-              className="contact-us-button"
-                    onClick={() => {
-                document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }}
-                  >
-              Contact Us
-                  </button>
+          {/* Image Grid */}
+          <div className="image-grid">
+            <div className="grid-item">
+              <img src="/bottom1.JPG" alt="Rendezvous Regatta" />
+            </div>
+            <div className="grid-item">
+              <img src="/bottom2.JPG" alt="Rendezvous Regatta" />
+            </div>
+            <div className="grid-item">
+              <img src="/bottom3.JPEG" alt="Rendezvous Regatta" />
+            </div>
           </div>
           
-          <div className="company-logos">
-            <p style={{ width: '100%', textAlign: 'center', color: '#888', fontSize: '0.9rem', marginBottom: '1rem' }}>
-              Trusted by leading organizations
-            </p>
-            {/* Note: Add company logos here when available */}
-            {/* Example placeholders - replace with actual logo images */}
-            <div className="company-logo-placeholder" style={{ color: '#EADAB6', fontSize: '1.2rem', fontWeight: '600' }}>
-              Milwaukee Bucks
-                </div>
-            <div className="company-logo-placeholder" style={{ color: '#EADAB6', fontSize: '1.2rem', fontWeight: '600' }}>
-              Milwaukee Brewers
-              </div>
-            <div className="company-logo-placeholder" style={{ color: '#EADAB6', fontSize: '1.2rem', fontWeight: '600' }}>
-              Sendik's
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Slideshow Section */}
-      <section className="slideshow-section" ref={addToRefs}>
-        <div className="slideshow-wrapper">
-          {loadingHomeSlides ? (
-            <div className="loading">Loading gallery...</div>
-          ) : (
-            <ImageSlideshow images={homeSlides} />
-          )}
-        </div>
-      </section> 
-
-      {/* Our Process Section */}
-      <section className="process-section" ref={addToRefs}>
-        <div className="process-container">
-          <h2 className="process-title">Our Process</h2>
-          <div className="process-content">
-            <div className="process-item">
-              <h3>Design Consultation</h3>
-            <p>
-                Collaborate with our experts to find the perfect stone solution that aligns 
-                with your vision and space requirements.
-              </p>
-            </div>
-            <div className="process-item">
-              <h3>Precision Measuring</h3>
-              <p>
-                Our state-of-the-art laser measuring technology ensures a perfect fit for 
-                your countertops.
-            </p>
-            </div>
-            <div className="process-item">
-              <h3>Slab Selection & Grain Matching</h3>
-              <p>
-                Using our <strong>Horus slab scanner</strong> and <strong>Sasso K-600 miter saw</strong>, 
-                we ensure all slabs are properly grain matched. This advanced technology allows us 
-                to create seamless patterns and perfect alignment across multiple pieces.
-              </p>
-          </div>
-            <div className="process-item">
-              <h3>CNC Fabrication</h3>
-            <p>
-                Leveraging advanced CNC machinery, we guarantee intricate designs and 
-                superior finish quality for every countertop.
-            </p>
-          </div>
-            <div className="process-item">
-              <h3>Professional Installation</h3>
-            <p>
-                Expert installation by our skilled team ensures your countertops are 
-                perfectly placed and finished.
-            </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Inquiry Form Section */}
-      <section id="inquiry-form" className="inquiry-form-section" ref={addToRefs}>
-        <div className="inquiry-form-container">
-          <h2 className="inquiry-form-title">Get In Touch</h2>
-          <div className="contact-info-links">
-            <a href="tel:+1-414-617-8078" className="contact-info-link">
-              <FaPhone size="1.5rem" />
-              <span>414-617-8078</span>
-            </a>
-            <a href="mailto:bellastone@live.com" className="contact-info-link">
-              <FaEnvelope size="1.5rem" />
-              <span>bellastone@live.com</span>
+          <div className="submit-photos-container">
+            <a 
+              href="mailto:racedirector@pwycwi.com?subject=Photo Submission for Rendezvous Regatta"
+              className="submit-photos-button"
+            >
+              Submit Photos
             </a>
           </div>
-          <ContactForm />
         </div>
       </section>
 
-      <footer className="footer-landing">
+      {/* Footer */}
+      <footer className="home-footer">
         <div className="footer-content-landing">
           <a 
-            href="https://www.google.com/maps/place/Bella+Stone,+LLc/@43.4641412,-87.9532781,14.4z/data=!4m6!3m5!1s0x8804ecb6d0b3058f:0x75c35b6057b78256!8m2!3d43.4583816!4d-87.948204!16s%2Fg%2F1vbnpzy2?entry=ttu" 
+            href="https://www.google.com/maps/place/Port+Washington+Yacht+Club/@43.3918745,-87.8681159,17z/data=!3m1!4b1!4m6!3m5!1s0x8804ea1cbd453539:0x7d30452aaee626c4!8m2!3d43.3918706!4d-87.865541!16s%2Fg%2F1tfpq7zy" 
             target="_blank" 
             rel="noopener noreferrer"
             className="maps-button"
           >
-            <img src="/BellaMap.png" alt="Location" style={{ width: '250px', height: '250px', borderRadius: '7px' }} />
+            <img src="/pwycmap.png" alt="Port Washington Yacht Club Location" className="footer-map-image" />
           </a>
 
-          <div className="contact-grid-footer">
-            <a href="https://www.facebook.com/BellaStoneLLC/" target="_blank" rel="noopener noreferrer" className="social-button-top">
-              <FaFacebook size="2rem" />
+          <div className="footer-copyright">
+            <p>© 2026 PWYC RENDEZVOUS REGATTA</p>
+          </div>
+
+          <div className="footer-social-links">
+            <a href="https://www.facebook.com/PWYCWI" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link">
+              <FaFacebook size="2.4rem" />
             </a>
-            <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" className="social-button-top">
-              <FaInstagram size="2rem" />
-            </a>
-            <a href="tel:+1-414-617-8078" className="social-button-top">
-              <FaPhone size="2rem" />
-            </a>
-            <a href="mailto:bellastone@live.com" className="social-button-top">
-              <FaEnvelope size="2rem" />
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-link">
+              <FaInstagram size="2.4rem" />
             </a>
           </div>
         </div>
-        <div className="footer-copyright">
-          <p>Copyright Bella Stone LLC 2026</p>
-        </div>
       </footer>
+
+      {/* Modals */}
+      <DownloadModal
+        isOpen={openModal === 'nor'}
+        onClose={closeModal}
+        title="NOR"
+        pdfPath="/PWYC NOR and SI's 2026.pdf"
+        downloadFileName="PWYC NOR and SI's 2026.pdf"
+        showNORContent={true}
+      />
+      <DownloadModal
+        isOpen={openModal === 'waiver'}
+        onClose={closeModal}
+        title="Liability Waiver"
+        pdfPath="/Liability Waiver.pdf"
+        downloadFileName="Liability Waiver.pdf"
+        showWaiverContent={true}
+      />
+      <DownloadModal
+        isOpen={openModal === 'entry'}
+        onClose={closeModal}
+        title="Entry Form"
+        pdfPath="/entry-form.pdf"
+        downloadFileName="Entry-Form.pdf"
+      />
+      <SignupModal
+        isOpen={openModal === 'signup'}
+        onClose={closeModal}
+      />
     </div>
   );
 };

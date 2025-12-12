@@ -1,0 +1,182 @@
+.fleet-page {
+  min-height: 100vh;
+  padding-top: 80px;
+  background-color: #B0D4E8;
+}
+
+
+.fleet-hero {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+  color: #ffffff;
+}
+
+.fleet-hero h1 {
+  font-size: 2.5rem;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  color: #EADAB6;
+}
+
+.fleet-hero p {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #EADAB6;
+}
+
+.fleet-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.fleet-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.fleet-filters button {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e0e0e0;
+  background-color: #ffffff;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.fleet-filters button:hover {
+  border-color: #ff6b35;
+  color: #ff6b35;
+}
+
+.fleet-filters button.active {
+  background-color: #ff6b35;
+  color: #ffffff;
+  border-color: #ff6b35;
+}
+
+.fleet-empty {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.fleet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.fleet-card {
+  background-color: #ffffff;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.fleet-card-image {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1rem;
+}
+
+.fleet-boat-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  max-height: 300px;
+}
+
+.fleet-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-color: #ff6b35;
+}
+
+.fleet-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.fleet-card-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+}
+
+.fleet-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.fleet-badge.racing {
+  background-color: #ff6b35;
+  color: #ffffff;
+}
+
+.fleet-badge.cruising {
+  background-color: #4a5568;
+  color: #ffffff;
+}
+
+.fleet-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fleet-detail {
+  color: #333;
+  line-height: 1.6;
+}
+
+.fleet-detail strong {
+  color: #1a1a1a;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .fleet-hero h1 {
+    font-size: 2rem;
+  }
+
+  .fleet-hero p {
+    font-size: 1rem;
+  }
+
+  .fleet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fleet-filters {
+    flex-direction: column;
+  }
+
+  .fleet-filters button {
+    width: 100%;
+  }
+}
+

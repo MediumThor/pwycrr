@@ -10,9 +10,12 @@ import Inventory from './pages/Inventory';
 import './App.css';
 
 // Lazy load less frequently used pages
-const Sailing = lazy(() => import('./pages/Sailing'));
+const Schedule = lazy(() => import('./pages/Schedule'));
 const Leadership = lazy(() => import('./pages/Leadership'));
 const Connect = lazy(() => import('./pages/Connect'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Fleet = lazy(() => import('./pages/Fleet'));
+const Sponsors = lazy(() => import('./pages/Sponsors'));
 const Blog = lazy(() => import('./pages/Blog'));
 const Resources = lazy(() => import('./pages/Resources'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
@@ -70,10 +73,11 @@ function App() {
               <Route path="/our-process" element={<main className="main-content"><OurProcess /></main>} />
               <Route path="/inventory" element={<main className="main-content"><Inventory /></main>} />
               <Route 
-                path="/sailing" 
+                path="/schedule" 
                 element={
                   <Suspense fallback={<LoadingFallback />}>
-                    <main className="main-content"><Sailing /></main>
+                    <Navigation />
+                    <main className="main-content"><Schedule /></main>
                     <Footer />
                   </Suspense>
                 } 
@@ -94,6 +98,36 @@ function App() {
                   <Suspense fallback={<LoadingFallback />}>
                     <Navigation />
                     <main className="main-content"><Connect /></main>
+                    <Footer />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/contact" 
+                element={
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Navigation />
+                    <main className="main-content"><Contact /></main>
+                    <Footer />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/fleet" 
+                element={
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Navigation />
+                    <main className="main-content"><Fleet /></main>
+                    <Footer />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/sponsors" 
+                element={
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Navigation />
+                    <main className="main-content"><Sponsors /></main>
                     <Footer />
                   </Suspense>
                 } 

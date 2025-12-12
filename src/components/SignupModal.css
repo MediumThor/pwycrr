@@ -1,0 +1,488 @@
+.signup-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+  overflow-y: auto;
+}
+
+.signup-modal-container {
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 95vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+  margin: auto;
+}
+
+.signup-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.signup-modal-close:hover {
+  background-color: #f0f0f0;
+  color: #333;
+  transform: rotate(90deg);
+}
+
+.signup-modal-content {
+  padding: 3rem 2.5rem 2rem 2.5rem;
+}
+
+.signup-modal-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.signup-modal-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  text-align: center;
+  margin: 0 0 0.25rem 0;
+}
+
+.signup-modal-deadline {
+  font-size: 1rem;
+  color: #ff6b35;
+  text-align: center;
+  font-weight: 600;
+  margin: 0 0 2rem 0;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="email"],
+.form-group select {
+  padding: 0.75rem;
+  border: 1px solid #d4c5a9;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+  background-color: #EADAB6;
+  color: #1a1a1a;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #ff6b35;
+}
+
+.form-group input::placeholder {
+  color: #999;
+}
+
+.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.checkbox-group label {
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+  accent-color: #ff6b35;
+}
+
+.file-uploads {
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+}
+
+.file-uploads-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
+}
+
+.file-group {
+  margin-bottom: 1rem;
+}
+
+.file-group input[type="file"] {
+  padding: 0.5rem;
+  border: 1px solid #d4c5a9;
+  border-radius: 8px;
+  background-color: #EADAB6;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+}
+
+.file-group input[type="file"]:hover {
+  border-color: #ff6b35;
+  background-color: #f5e6d3;
+}
+
+.file-name {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+.waiver-link-container {
+  margin-bottom: 0.75rem;
+}
+
+.waiver-link {
+  display: inline-block;
+  color: #ff6b35;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #ff6b35;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.waiver-link:hover {
+  background-color: #ff6b35;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
+}
+
+.waiver-link-inline {
+  color: #ff6b35;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.waiver-link-inline:hover {
+  color: #e55a2b;
+}
+
+.waiver-download-section {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.waiver-download-link-button {
+  display: inline-block;
+  background-color: #ff6b35;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.waiver-download-link-button:hover {
+  background-color: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+.waiver-acknowledgement {
+  margin-top: 1.5rem;
+}
+
+.waiver-acknowledgement label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  line-height: 1.6;
+}
+
+.waiver-acknowledgement input[type="checkbox"] {
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.waiver-acknowledgement span {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.form-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+}
+
+.form-note {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.cancel-button,
+.submit-button {
+  padding: 0.875rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.cancel-button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.cancel-button:hover {
+  background-color: #d0d0d0;
+  transform: translateY(-2px);
+}
+
+.submit-button {
+  background-color: #ff6b35;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.submit-button:hover {
+  background-color: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+/* Success Message Styles */
+.success-message {
+  text-align: center;
+  padding: 2rem 1rem;
+  animation: fadeInScale 0.4s ease-out;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+  animation: checkmarkPop 0.5s ease-out 0.2s both;
+}
+
+.success-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.success-text {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+.success-text-secondary {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 1rem 0 2rem 0;
+  line-height: 1.6;
+}
+
+.success-button {
+  padding: 0.875rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  background-color: #ff6b35;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  margin-top: 1rem;
+}
+
+.success-button:hover {
+  background-color: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes checkmarkPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .signup-modal-backdrop {
+    padding: 0.5rem;
+  }
+
+  .signup-modal-container {
+    max-width: 100%;
+    border-radius: 12px;
+    max-height: 98vh;
+  }
+
+  .signup-modal-content {
+    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .signup-modal-title {
+    font-size: 1.5rem;
+  }
+
+  .signup-modal-subtitle {
+    font-size: 1rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .cancel-button,
+  .submit-button {
+    width: 100%;
+  }
+
+  .success-message {
+    padding: 1.5rem 1rem;
+  }
+
+  .success-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .success-title {
+    font-size: 1.5rem;
+  }
+
+  .success-text {
+    font-size: 1rem;
+  }
+
+  .success-text-secondary {
+    font-size: 0.9rem;
+  }
+
+  .success-button {
+    width: 100%;
+  }
+}
+

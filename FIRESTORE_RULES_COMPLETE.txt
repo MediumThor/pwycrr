@@ -1,0 +1,91 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Blog posts - public read for published, admin write
+    match /blogPosts/{postId} {
+      allow read: if resource.data.published == true || request.auth != null;
+      allow write: if request.auth != null;
+    }
+    
+    // Images - public read, admin write
+    match /images/{imageId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Slideshow images for Charters page - public read, admin write
+    match /slideshowImages/{imageId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Headshots - public read (About page), admin write (ImageLibrary)
+    match /headshots/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Charter inquiries - public create, admin read/write
+    match /charterInquiries/{inquiryId} {
+      allow create: if true;
+      allow read, write: if request.auth != null;
+    }
+    
+    match /contactMessages/{msgId} {
+      allow create: if true;
+      allow read, write: if request.auth != null;
+    }
+
+    // Lesson inquiries - public create, admin read/write
+    match /lessonInquiries/{inquiryId} {
+      allow create: if true;
+      allow read, write: if request.auth != null;
+    }
+
+    // Home page slideshow images
+    match /homeSlideshowImages/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Inventory page image - public read, admin write
+    match /inventoryImage/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Homepage image - public read, admin write
+    match /homepageImage/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Charter registrations - public read/write for guestData, admin full access
+    match /charterRegistrations/{registrationId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null || 
+                     (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['guestData', 'status', 'updatedAt']));
+      allow delete: if request.auth != null;
+    }
+
+    // Regatta registrations - public create, admin read/write
+    match /regattaRegistrations/{registrationId} {
+      allow create: if true;
+      allow read, write: if request.auth != null;
+    }
+
+    // Sponsors - public read, admin write
+    match /sponsors/{sponsorId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Liability Waivers - public create, admin read/write
+    match /liabilityWaivers/{waiverId} {
+      allow create: if true;
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+
