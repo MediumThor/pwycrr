@@ -131,3 +131,22 @@ img {
   height: auto;
   display: block;
 }
+
+/* SailDash widget modal full width on mobile */
+@media (max-width: 768px) {
+  /* Target modals created by SailDash widgets */
+  [data-saildash-race-teams] [role="dialog"],
+  [data-saildash-race-teams] .modal,
+  [data-saildash-race] [role="dialog"],
+  [data-saildash-race] .modal,
+  body > [role="dialog"]:has([id*="saildash"]),
+  body > .modal:has([id*="saildash"]) {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

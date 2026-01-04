@@ -31,6 +31,16 @@
   padding: 3rem 2rem;
 }
 
+.race-teams-widget-container {
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+/* Make widget modal full width on mobile */
+.race-teams-widget-container [data-saildash-race-teams] {
+  width: 100%;
+}
+
 .fleet-filters {
   display: flex;
   gap: 1rem;
@@ -165,6 +175,41 @@
 
   .fleet-hero p {
     font-size: 1rem;
+  }
+
+  .fleet-content {
+    padding: 2rem 0;
+    max-width: 100%;
+  }
+
+  .race-teams-widget-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Make widget and modal full width on mobile */
+  .race-teams-widget-container [data-saildash-race-teams],
+  .race-teams-widget-container [data-saildash-race-teams] > *,
+  #saildash-race-teams-bfMuyZXkruEgTumgYOTI,
+  #saildash-race-teams-bfMuyZXkruEgTumgYOTI > * {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Target any modal/dialog created by the widget */
+  .race-teams-widget-container [role="dialog"],
+  .race-teams-widget-container .modal,
+  .race-teams-widget-container iframe,
+  body > [role="dialog"]:has([data-saildash-race-teams]),
+  body > .modal:has([data-saildash-race-teams]) {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .fleet-grid {

@@ -22,7 +22,7 @@
 .nav-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1.25rem 2rem;
+  padding: 0.75rem 2rem;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -45,9 +45,9 @@
 }
 
 .logo-img {
-  height: 75px;
+  height: 45px;
   width: auto;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .logo-title {
@@ -279,14 +279,14 @@
   }
 
   .nav-container {
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1.5rem;
     grid-template-columns: auto 1fr;
     position: relative;
     overflow: visible !important;
   }
 
   .logo-img {
-    height: 60px;
+    height: 40px;
   }
 
   .logo-title {
@@ -389,7 +389,7 @@
   }
 
   .logo-img {
-    height: 55px;
+    height: 35px;
     border-radius: 5px;
   }
 

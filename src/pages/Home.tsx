@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { FaFacebook, FaInstagram } from 'react-icons/fa';
 import DownloadModal from '../components/DownloadModal';
 import SignupModal from '../components/SignupModal';
@@ -8,10 +8,42 @@ const Home = () => {
   const [heroImage] = useState<string>('/sailing.jpg');
   const [openModal, setOpenModal] = useState<string | null>(null);
   const year = '2026';
+  const widgetContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // You can fetch hero image from Firebase here if needed
     // For now, using default image
+    
+    // Ensure SailDash widget initializes
+    const checkAndInitWidget = () => {
+      const widgetElement = document.querySelector('[data-saildash-race]');
+      if (widgetElement) {
+        console.log('SailDash widget element found:', widgetElement);
+        
+        // Check if script is loaded
+        const scriptLoaded = document.querySelector('script[src*="saildash-widgets.js"]');
+        if (scriptLoaded) {
+          console.log('SailDash script tag found');
+        } else {
+          console.warn('SailDash script tag not found - script may still be loading');
+        }
+        
+        // The widget script uses MutationObserver, so it should auto-initialize
+        // If it doesn't, we can try to manually trigger it after a delay
+        setTimeout(() => {
+          const widgetContent = widgetElement.innerHTML.trim();
+          if (!widgetContent) {
+            console.warn('SailDash widget has not initialized yet. This may be normal if the script is still loading.');
+          }
+        }, 2000);
+      }
+    };
+    
+    // Check immediately and after a short delay
+    checkAndInitWidget();
+    const timeoutId = setTimeout(checkAndInitWidget, 1000);
+    
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const closeModal = () => setOpenModal(null);
@@ -28,7 +60,9 @@ const Home = () => {
             <h1 className="hero-title">{year} PWYC RENDEZVOUS REGATTA</h1>
             <button 
               className="sign-up-button"
-              onClick={() => setOpenModal('signup')}
+              onClick={() => {
+                widgetContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
             >
               SIGN UP
             </button>
@@ -77,6 +111,18 @@ const Home = () => {
             <p className="content-text">
               Fair winds, good racing, and we look forward to seeing you on the starting line.
             </p>
+          </div>
+          
+          {/* SailDash Race Registration Widget */}
+          <div className="saildash-widget-container" ref={widgetContainerRef}>
+            <div
+              id="saildash-race-bfMuyZXkruEgTumgYOTI"
+              data-saildash-race
+              data-race="d1a8a66eCU9S4BpXg45B"
+              data-theme="light"
+              data-mode="redirect"
+              data-show-instructions="true"
+            ></div>
           </div>
           
           {/* Image Grid */}
