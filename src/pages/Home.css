@@ -418,8 +418,8 @@
   /* Make widget and modal full width on mobile */
   .saildash-widget-container [data-saildash-race],
   .saildash-widget-container [data-saildash-race] > *,
-  #saildash-race-bfMuyZXkruEgTumgYOTI,
-  #saildash-race-bfMuyZXkruEgTumgYOTI > * {
+  #saildash-race-Xmnr4JbNLrrbG159npUA,
+  #saildash-race-Xmnr4JbNLrrbG159npUA > * {
     width: 100% !important;
     max-width: 100% !important;
   }

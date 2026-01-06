@@ -116,9 +116,9 @@ const Home = () => {
           {/* SailDash Race Registration Widget */}
           <div className="saildash-widget-container" ref={widgetContainerRef}>
             <div
-              id="saildash-race-bfMuyZXkruEgTumgYOTI"
+              id="saildash-race-Xmnr4JbNLrrbG159npUA"
               data-saildash-race
-              data-race="d1a8a66eCU9S4BpXg45B"
+              data-race="7Am5DPhbq2dj85uvIKqZ"
               data-theme="light"
               data-mode="redirect"
               data-show-instructions="true"

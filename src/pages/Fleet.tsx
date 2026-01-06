@@ -47,9 +47,9 @@ const Fleet = () => {
       <div className="fleet-content">
         <div className="race-teams-widget-container" ref={widgetContainerRef}>
           <div 
-            id="saildash-race-teams-bfMuyZXkruEgTumgYOTI" 
+            id="saildash-race-teams-Xmnr4JbNLrrbG159npUA" 
             data-saildash-race-teams 
-            data-race="d1a8a66eCU9S4BpXg45B" 
+            data-race="7Am5DPhbq2dj85uvIKqZ" 
             data-theme="light"
           ></div>
         </div>
